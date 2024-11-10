@@ -1,8 +1,7 @@
 package app.barun.journalApp.service;
 
-import app.barun.journalApp.model.Journal;
+
 import app.barun.journalApp.model.User;
-import app.barun.journalApp.repository.JournalRepository;
 import app.barun.journalApp.repository.UserRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,23 +16,26 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public void saveEntry(User user){
+    public void saveEntry(User user) {
+        if (userRepository.findByUserName(user.getUserName()) != null) {
+            throw new IllegalArgumentException("Username '" + user.getUserName() + "' already exists.");
+        }
         userRepository.save(user);
     }
 
-    public List<User> getAll(){
+    public List<User> getAll() {
         return userRepository.findAll();
     }
 
-    public Optional<User> findById(ObjectId id){
+    public Optional<User> findById(ObjectId id) {
         return userRepository.findById(id);
     }
 
-    public void deleteById(ObjectId id){
+    public void deleteById(ObjectId id) {
         userRepository.deleteById(id);
     }
 
-    public User findByUserName(String userName){
+    public User findByUserName(String userName) {
         return userRepository.findByUserName(userName);
     }
 

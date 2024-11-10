@@ -17,19 +17,24 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return userService.getAll();
     }
 
     @PostMapping
-    public void createUser(@RequestBody User user){
-        userService.saveEntry(user);
+    public ResponseEntity<String> createUser(@RequestBody User user) {
+        try {
+            userService.saveEntry(user);
+            return new ResponseEntity<>("User created successfully!", HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>("ERROR:'" + e.getMessage(), HttpStatus.CONFLICT);
+        }
     }
 
     @PutMapping("/{userName}")
-    public ResponseEntity<?> updateUser(@RequestBody User user, @PathVariable String userName){
+    public ResponseEntity<?> updateUser(@RequestBody User user, @PathVariable String userName) {
         User userInDb = userService.findByUserName(userName);
-        if (userInDb != null){
+        if (userInDb != null) {
             userInDb.setUserName(user.getUserName());
             userInDb.setPassword(user.getPassword());
             userService.saveEntry(userInDb);
