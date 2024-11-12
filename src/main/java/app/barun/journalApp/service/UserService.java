@@ -29,16 +29,13 @@ public class UserService {
 //        userRepository.save(user);
 //    }
 
-    public void saveEntry(User user) {
+    public void saveNewUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(Collections.singletonList("USER"));
+        user.setRoles(Arrays.asList("USER"));
         userRepository.save(user);
     }
 
-    public void saveNewUser(User user) {
-        if (userRepository.findByUserName(user.getUserName()) != null) {
-            throw new IllegalArgumentException("Username '" + user.getUserName() + "' already exists.");
-        }
+    public void saveUser(User user) {
         userRepository.save(user);
     }
 

@@ -22,7 +22,7 @@ public class PublicController {
     @PostMapping("/create-user")
     public ResponseEntity<String> createUser(@RequestBody User user) {
         try {
-            userService.saveEntry(user);
+            userService.saveNewUser(user);
             return new ResponseEntity<>("User created successfully!", HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>("ERROR:'" + e.getMessage(), HttpStatus.CONFLICT);
