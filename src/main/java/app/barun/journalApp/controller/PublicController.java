@@ -20,12 +20,18 @@ public class PublicController {
     }
 
     @PostMapping("/create-user")
-    public ResponseEntity<String> createUser(@RequestBody User user) {
-        try {
-            userService.saveNewUser(user);
-            return new ResponseEntity<>("User created successfully!", HttpStatus.CREATED);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>("ERROR:'" + e.getMessage(), HttpStatus.CONFLICT);
-        }
+    public void createUser(@RequestBody User user) {
+        userService.saveNewUser(user);
     }
+
+//
+//    @PostMapping("/create-user")
+//    public ResponseEntity<String> createUser(@RequestBody User user) {
+//        try {
+//            userService.saveNewUser(user);
+//            return new ResponseEntity<>("User created successfully!", HttpStatus.CREATED);
+//        } catch (IllegalArgumentException e) {
+//            return new ResponseEntity<>("ERROR:'" + e.getMessage(), HttpStatus.CONFLICT);
+//        }
+//    }
 }
