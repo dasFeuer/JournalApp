@@ -36,6 +36,7 @@ public class UserService {
             userRepository.save(user);
             return true;
         } catch (Exception e){
+            e.printStackTrace(); // Logs the error
             return false;
         }
     }
