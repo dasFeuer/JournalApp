@@ -3,6 +3,7 @@ package app.barun.journalApp.service;
 import app.barun.journalApp.model.Journal;
 import app.barun.journalApp.model.User;
 import app.barun.journalApp.repository.JournalRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
+@Slf4j
 public class JournalService {
 
     @Autowired
@@ -58,14 +60,10 @@ public class JournalService {
                 journalRepository.deleteById(id);
             }
         } catch (Exception e){
-            System.out.println(e);
+            log.error("Error");
             throw new RuntimeException("An error occurred while deleting the entry.", e);
         }
 
         return removed;
     }
-
-//    public List<Journal> findByUserName(String userName){
-//        return journalRepository.findById(userName);
-//    }
 }
