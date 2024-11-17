@@ -7,3 +7,4 @@ So, now I want to learn Sprint boot again and it's new features with some new te
 I will up updating what I have learned!
 1. Today I have created REST API.
 2. Got to know about new thing today and that is, instead of using application.properties one can also use application.yml by creating YAML file which is really easy and useful.
+3. Today I got to know about SonarCloud which help us to enhancing our code quality.
