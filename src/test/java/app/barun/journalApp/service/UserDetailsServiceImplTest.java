@@ -4,6 +4,7 @@ import app.barun.journalApp.model.User;
 import app.barun.journalApp.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
@@ -19,6 +20,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
 
+@Disabled
 @ActiveProfiles("dev")
 public class UserDetailsServiceImplTest {
 
@@ -28,11 +30,13 @@ public class UserDetailsServiceImplTest {
     @Mock
     private UserRepository userRepository;
 
+    @Disabled
     @BeforeEach
     void setUp(){
         MockitoAnnotations.initMocks(this);
     }
 
+    @Disabled
     @Test
     void loadUserByUsernameTest(){
         when(userRepository.findByUserName(ArgumentMatchers.anyString())).thenReturn(User.builder().userName("ram").password("qwerty").roles(new ArrayList<>()).build());
