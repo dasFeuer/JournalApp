@@ -1,6 +1,6 @@
 package app.barun.journalApp.repository;
 
-import app.barun.journalApp.model.User;
+import app.barun.journalApp.entity.User;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 

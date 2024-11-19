@@ -1,7 +1,7 @@
 package app.barun.journalApp.controller;
 
 import app.barun.journalApp.api.Response.WeatherResponse;
-import app.barun.journalApp.model.User;
+import app.barun.journalApp.entity.User;
 import app.barun.journalApp.repository.UserRepository;
 import app.barun.journalApp.service.UserService;
 import app.barun.journalApp.service.WeatherService;

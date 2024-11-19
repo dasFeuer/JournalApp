@@ -1,4 +1,4 @@
-package app.barun.journalApp.model;
+package app.barun.journalApp.entity;
 
 import lombok.Builder;
 import lombok.Data;

@@ -1,7 +1,7 @@
 package app.barun.journalApp.service;
 
-import app.barun.journalApp.model.Journal;
-import app.barun.journalApp.model.User;
+import app.barun.journalApp.entity.Journal;
+import app.barun.journalApp.entity.User;
 import app.barun.journalApp.repository.JournalRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;

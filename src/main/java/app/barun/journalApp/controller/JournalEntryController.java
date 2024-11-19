@@ -1,7 +1,7 @@
 package app.barun.journalApp.controller;
 
-import app.barun.journalApp.model.Journal;
-import app.barun.journalApp.model.User;
+import app.barun.journalApp.entity.Journal;
+import app.barun.journalApp.entity.User;
 import app.barun.journalApp.service.JournalService;
 import app.barun.journalApp.service.UserService;
 import org.bson.types.ObjectId;

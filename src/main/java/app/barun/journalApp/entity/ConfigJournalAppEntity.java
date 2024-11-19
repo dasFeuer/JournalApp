@@ -1,4 +1,4 @@
-package app.barun.journalApp.model;
+package app.barun.journalApp.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,16 +9,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
-@Document(collection = "journal")
+@Document(collection = "config_journal_app")
 @Data
 @NoArgsConstructor
-public class Journal {
+public class ConfigJournalAppEntity {
 
-    @Id
-    private ObjectId id;
-    @NonNull
-    private String title;
-    private String content;
-    private LocalDateTime date;
+    private String key;
+    private String value;
 
 }

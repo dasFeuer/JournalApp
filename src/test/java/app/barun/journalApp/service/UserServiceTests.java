@@ -1,6 +1,6 @@
 package app.barun.journalApp.service;
 
-import app.barun.journalApp.model.User;
+import app.barun.journalApp.entity.User;
 import app.barun.journalApp.repository.UserRepository;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;

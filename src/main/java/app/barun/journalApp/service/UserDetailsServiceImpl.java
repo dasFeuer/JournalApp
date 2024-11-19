@@ -1,6 +1,6 @@
 package app.barun.journalApp.service;
 
-import app.barun.journalApp.model.User;
+import app.barun.journalApp.entity.User;
 import app.barun.journalApp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
