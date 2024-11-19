@@ -16,7 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
-@Disabled("Temporarily disabled for code quality improvements")
+
 @ActiveProfiles("dev")
 public class UserDetailsServiceImplTest {
 
@@ -26,13 +26,13 @@ public class UserDetailsServiceImplTest {
     @Mock
     private UserRepository userRepository;
 
-    @Disabled("Temporarily disabled for code quality improvements")
+    @Disabled
     @BeforeEach
     void setUp(){
         MockitoAnnotations.initMocks(this);
     }
 
-    @Disabled("Temporarily disabled for code quality improvements")
+    @Disabled
     @Test
     void loadUserByUsernameTest(){
         when(userRepository.findByUserName(ArgumentMatchers.anyString())).thenReturn(User.builder().userName("ram").password("qwerty").roles(new ArrayList<>()).build());

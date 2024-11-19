@@ -12,7 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static com.mongodb.assertions.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@Disabled("Temporarily disabled for code quality improvements")
 @SpringBootTest
 public class UserServiceTests {
 
@@ -28,14 +27,14 @@ public class UserServiceTests {
     private UserService userService;
 
 
-    @Disabled("Temporarily disabled for code quality improvements")
+    @Disabled
     @ParameterizedTest
     @ArgumentsSource(UserArgumentsProvider.class)
     public void testSaveNewUser(User user) {
         assertTrue(userService.saveNewUser(user));
     }
 
-    @Disabled("Temporarily disabled for code quality improvements")
+    @Disabled
     @ParameterizedTest
     @CsvSource({
             "1,1,2",
