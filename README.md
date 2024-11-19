@@ -1,4 +1,4 @@
-# Spring-PracticeV2
+# journalApp
 
 I am learning Spring boot again so that I can learn some new features of it even though I have made some projects already! I want to make my projects in optimized way because in previous projects I have faced some issues even though I have solved the issue but not in optimized way that means they just works but not I a way I wanted to. That's why LEARNING IS IMPORTANT FOR IMPROVING
 
