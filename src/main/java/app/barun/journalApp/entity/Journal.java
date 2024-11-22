@@ -1,5 +1,6 @@
 package app.barun.journalApp.entity;
 
+import app.barun.journalApp.enums.Sentiment;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -20,5 +21,6 @@ public class Journal {
     private String title;
     private String content;
     private LocalDateTime date;
+    private Sentiment sentiment;
 
 }
