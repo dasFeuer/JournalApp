@@ -9,3 +9,4 @@ I will up updating what I have learned!
 2. Got to know about new thing today and that is, instead of using application.properties one can also use application.yml by creating YAML file which is really easy and useful.
 3. Today I got to know about SonarCloud which help us to enhancing our code quality.
 4. Today I learned how we can schedule a task with Cron Jobs in Spring Boot
+5. I have configured Redis in my Journal app.
