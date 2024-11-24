@@ -13,15 +13,14 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class WeatherService {
-
     @Value("${weather.api.key}")
     private String apiKey;
 
     @Autowired
-    private AppCache appCache;
+    private RestTemplate restTemplate;
 
     @Autowired
-    private RestTemplate restTemplate;
+    private AppCache appCache;
 
     @Autowired
     private RedisService redisService;
