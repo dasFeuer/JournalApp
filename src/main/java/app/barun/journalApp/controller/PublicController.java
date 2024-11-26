@@ -30,11 +30,6 @@ public class PublicController {
     @Autowired
     private JwtUtil jwtUtil;
 
-    @GetMapping("/health-check")
-    public String healthCheck() {
-        return "OK!";
-    }
-
     @PostMapping("/signup")
     public void signup(@RequestBody User user) {
         userService.saveNewUser(user);
