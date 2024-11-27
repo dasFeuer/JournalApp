@@ -1,9 +1,11 @@
 package app.barun.journalApp.controller;
 
+import app.barun.journalApp.dto.UserDTO;
 import app.barun.journalApp.entity.User;
 import app.barun.journalApp.service.UserDetailsServiceImpl;
 import app.barun.journalApp.service.UserService;
 import app.barun.journalApp.utilis.JwtUtil;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Slf4j
 @RequestMapping("/public")
+@Tag(name = "Public APIs")
 public class PublicController {
 
     @Autowired
@@ -31,8 +34,13 @@ public class PublicController {
     private JwtUtil jwtUtil;
 
     @PostMapping("/signup")
-    public void signup(@RequestBody User user) {
-        userService.saveNewUser(user);
+    public void signup(@RequestBody UserDTO user) {
+        User newUser = new User();
+        newUser.setEmail(user.getEmail());
+        newUser.setUserName(user.getUserName());
+        newUser.setPassword(user.getPassword());
+        newUser.setSentimentAnalysis(user.isSentimentAnalysis());
+        userService.saveNewUser(newUser);
     }
 
     @PostMapping("/login")
