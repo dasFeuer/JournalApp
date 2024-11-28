@@ -9,9 +9,15 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 public class RedisConfig {
 
+    /**
+     * Configure RedisTemplate with String serializers for both keys and values.
+     *
+     * @param factory the RedisConnectionFactory
+     * @return a configured RedisTemplate instance
+     */
     @Bean
-    public RedisTemplate redisTemplate(RedisConnectionFactory factory){
-        RedisTemplate redisTemplate = new RedisTemplate<>();
+    public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
+        RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(factory);
 
         redisTemplate.setKeySerializer(new StringRedisSerializer());
@@ -19,5 +25,4 @@ public class RedisConfig {
 
         return redisTemplate;
     }
-
 }

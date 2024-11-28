@@ -5,6 +5,10 @@ import app.barun.journalApp.entity.User;
 import app.barun.journalApp.repository.UserRepository;
 import app.barun.journalApp.service.UserService;
 import app.barun.journalApp.service.WeatherService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
-@Tag(name = "User APIs", description = "Read, Update and Delete user")
+@Tag(name = "User APIs", description = "APIs for managing user information such as updating, deleting, and personalized greetings.")
 public class UserController {
 
     @Autowired
@@ -28,32 +32,62 @@ public class UserController {
     private WeatherService weatherService;
 
     @PutMapping
-    public ResponseEntity<?> updateUser(@RequestBody User user) {
+    @Operation(summary = "Update user", description = "Update the username and password of the currently authenticated user.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "User updated successfully."),
+            @ApiResponse(responseCode = "400", description = "Invalid user details provided."),
+            @ApiResponse(responseCode = "401", description = "User not authenticated.")
+    })
+    public ResponseEntity<Void> updateUser(
+            @Parameter(description = "User object containing updated username and password.") @RequestBody User user) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
         User userInDb = userService.findByUserName(userName);
+
         userInDb.setUserName(user.getUserName());
         userInDb.setPassword(user.getPassword());
+
         userService.saveNewUser(userInDb);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping
-    public ResponseEntity<?> deleteUserById() {
+    @Operation(summary = "Delete user", description = "Delete the currently authenticated user's account.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "User deleted successfully."),
+            @ApiResponse(responseCode = "401", description = "User not authenticated.")
+    })
+    public ResponseEntity<Void> deleteUserById() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        userRepository.deleteByUserName(authentication.getName());
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        String userName = authentication.getName();
+
+        userRepository.deleteByUserName(userName);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping
-    public ResponseEntity<?> greeting() {
+    @Operation(summary = "Greet user with weather info", description = "Provide a personalized greeting to the currently authenticated user, along with current weather conditions.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Greeting and weather info provided successfully."),
+            @ApiResponse(responseCode = "401", description = "User not authenticated."),
+            @ApiResponse(responseCode = "500", description = "Unable to fetch weather information.")
+    })
+    public ResponseEntity<String> greeting() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        WeatherResponse weatherResponse = weatherService.getWeather("Kathmandu");
-        String greeting = "";
-        if (weatherResponse != null) {
-            greeting = ", Weather feels like " + weatherResponse.getCurrent().getFeelslike();
-        }
-        return new ResponseEntity<>("Hi " + authentication.getName() + greeting, HttpStatus.OK);
-    }
+        String userName = authentication.getName();
 
+        String greetingMessage = "Hi " + userName;
+
+        try {
+            WeatherResponse weatherResponse = weatherService.getWeather("Kathmandu");
+            if (weatherResponse != null) {
+                greetingMessage += ", Weather feels like " + weatherResponse.getCurrent().getFeelslike();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Hi " + userName + ". Unable to fetch weather information at this time.");
+        }
+
+        return ResponseEntity.ok(greetingMessage);
+    }
 }

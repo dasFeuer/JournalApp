@@ -24,20 +24,21 @@ public class UserService {
     private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public boolean saveNewUser(User user) {
-        try{
+        try {
+            if (userRepository.findByUserName(user.getUserName()) != null) {
+                log.warn("User with username '{}' already exists", user.getUserName());
+                return false;
+            }
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setRoles(Arrays.asList("USER"));
             userRepository.save(user);
             return true;
-        } catch (Exception e){
-            log.error("Error occurred");
-            log.warn("Error occurred");
-            log.info("Error occurred");
-            log.debug("Error occurred");
-            log.trace("Error occurred");
+        } catch (Exception e) {
+            log.error("Error occurred while saving user: {}", e.getMessage(), e);
             return false;
         }
     }
+
 
     public void saveAdminUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
