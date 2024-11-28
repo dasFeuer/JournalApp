@@ -8,9 +8,12 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -65,4 +68,30 @@ public class AdminController {
         appCache.init();
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping("/id/{id}")
+    @Operation(
+            summary = "Delete user",
+            description = "Delete a user by their ID. Requires appropriate permissions."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "User deleted successfully."),
+            @ApiResponse(responseCode = "404", description = "User not found."),
+            @ApiResponse(responseCode = "401", description = "User not authenticated.")
+    })
+    public ResponseEntity<String> deleteUserById(
+            @Parameter(description = "ID of the user to delete.") @PathVariable ObjectId id
+    ) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isDeleted = userService.deleteUserById(id);
+
+        if (isDeleted) {
+            return ResponseEntity.ok("User with ID " + id + " has been deleted successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("User with ID " + id + " not found.");
+        }
+    }
+
+
 }

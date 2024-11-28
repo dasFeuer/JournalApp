@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,19 +52,6 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping
-    @Operation(summary = "Delete user", description = "Delete the currently authenticated user's account.")
-    @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "User deleted successfully."),
-            @ApiResponse(responseCode = "401", description = "User not authenticated.")
-    })
-    public ResponseEntity<Void> deleteUserById() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userName = authentication.getName();
-
-        userRepository.deleteByUserName(userName);
-        return ResponseEntity.noContent().build();
-    }
 
     @GetMapping
     @Operation(summary = "Greet user with weather info", description = "Provide a personalized greeting to the currently authenticated user, along with current weather conditions.")

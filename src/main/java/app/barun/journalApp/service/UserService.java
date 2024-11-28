@@ -3,6 +3,7 @@ package app.barun.journalApp.service;
 
 import app.barun.journalApp.entity.User;
 import app.barun.journalApp.repository.UserRepository;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,9 +59,15 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public void deleteById(ObjectId id) {
+    public boolean deleteUserById(@NonNull ObjectId id) {
+        if (!userRepository.existsById(id)) {
+            return false;
+        }
         userRepository.deleteById(id);
+        return true;
     }
+
+
 
     public User findByUserName(String userName) {
         return userRepository.findByUserName(userName);
