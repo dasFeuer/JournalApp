@@ -49,7 +49,7 @@ public class UserController {
         userInDb.setPassword(user.getPassword());
 
         userService.saveNewUser(userInDb);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
 

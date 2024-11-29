@@ -31,6 +31,14 @@ public class JournalEntryController {
     @Autowired
     private UserService userService;
 
+    /*
+   Inorder to use this controller the user should be login and have JwtToken. To use the CRUD operation
+   journal id of login user is needed.
+     */
+
+    /*
+    This method is used to get all journal entries of the login user with JwtToken
+     */
     @GetMapping
     @Operation(summary = "Get all journal entries of the user", description = "Retrieve all journal entries associated with the authenticated user.")
     @ApiResponses({
@@ -48,6 +56,10 @@ public class JournalEntryController {
         }
         return ResponseEntity.noContent().build();
     }
+
+        /*
+    This method is used to get journal entry of the login user with JwtToken along with journal id of login user.
+     */
 
     @GetMapping("id/{myId}")
     @Operation(summary = "Get a journal entry by ID", description = "Retrieve a specific journal entry by its ID for the authenticated user.")
@@ -72,6 +84,10 @@ public class JournalEntryController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+        /*
+    This method is used to create journal entries of the login user with JwtToken
+     */
+
     @PostMapping
     @Operation(summary = "Create a new journal entry", description = "Add a new journal entry for the authenticated user.")
     @ApiResponses({
@@ -90,6 +106,9 @@ public class JournalEntryController {
         }
     }
 
+    /*
+    This method is used to delete journal entry of the login user with JwtToken along with journal id of login user.
+ */
     @DeleteMapping("id/{myId}")
     @Operation(summary = "Delete a journal entry by ID", description = "Remove a specific journal entry by its ID for the authenticated user.")
     @ApiResponses({
@@ -109,6 +128,9 @@ public class JournalEntryController {
         return ResponseEntity.notFound().build();
     }
 
+    /*
+This method is used to update journal entries of the login user with JwtToken
+*/
     @PutMapping("id/{myId}")
     @Operation(summary = "Update a journal entry by ID", description = "Modify an existing journal entry by its ID for the authenticated user.")
     @ApiResponses({

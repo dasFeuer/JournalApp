@@ -43,8 +43,11 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
+    /*
+    Same as sign up in this mapping one can create a new admin user directly.
+     */
     @PostMapping("/create-admin-user")
-    @Operation(summary = "Create an admin user", description = "Add a new admin user to the system.")
+    @Operation(summary = "Create an admin user directly same as signup method", description = "Add a new admin user to the system. ADMIN ONLY")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Admin user created successfully."),
             @ApiResponse(responseCode = "400", description = "Invalid user details provided.")

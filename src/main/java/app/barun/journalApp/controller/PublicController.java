@@ -36,6 +36,10 @@ public class PublicController {
     @Autowired
     private JwtUtil jwtUtil;
 
+
+    /*
+    For all method, first login should be done for JwtToken
+     */
     @PostMapping("/signup")
     @Operation(summary = "Register a new user", description = "Sign up a new user by providing their details.")
     @ApiResponses({
