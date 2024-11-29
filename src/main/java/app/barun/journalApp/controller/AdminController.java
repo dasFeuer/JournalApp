@@ -80,16 +80,17 @@ public class AdminController {
             @ApiResponse(responseCode = "401", description = "User not authenticated.")
     })
     public ResponseEntity<String> deleteUserById(
-            @Parameter(description = "ID of the user to delete.") @PathVariable ObjectId id
+            @Parameter(description = "ID of the user to delete.") @PathVariable String id
     ) {
+        ObjectId objectId = new ObjectId(id);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        boolean isDeleted = userService.deleteUserById(id);
+        boolean isDeleted = userService.deleteUserById(objectId);
 
         if (isDeleted) {
-            return ResponseEntity.ok("User with ID " + id + " has been deleted successfully.");
+            return ResponseEntity.ok("User with ID " + objectId + " has been deleted successfully.");
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("User with ID " + id + " not found.");
+                    .body("User with ID " + objectId + " not found.");
         }
     }
 

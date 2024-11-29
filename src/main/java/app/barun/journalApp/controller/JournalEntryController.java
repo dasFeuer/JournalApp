@@ -56,7 +56,7 @@ public class JournalEntryController {
             @ApiResponse(responseCode = "404", description = "Journal entry not found."),
             @ApiResponse(responseCode = "401", description = "Unauthorized access.")
     })
-    public ResponseEntity<Journal> getJournalEntryById(
+    public ResponseEntity<?> getJournalEntryById(
             @Parameter(description = "ID of the journal entry to retrieve.") @PathVariable String myId) {
         ObjectId objectId = new ObjectId(myId);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -64,10 +64,12 @@ public class JournalEntryController {
         User user = userService.findByUserName(userName);
         List<Journal> collect = user.getJournal().stream().filter(x -> x.getId().equals(objectId)).collect(Collectors.toList());
         if (!collect.isEmpty()) {
-            Optional<Journal> journal = journalService.findById(objectId);
-            return journal.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+            Optional<?> journal = journalService.findById(objectId);
+            if (journal.isPresent()) {
+                return new ResponseEntity<>(journal.get(), HttpStatus.OK);
+            }
         }
-        return ResponseEntity.notFound().build();
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
@@ -96,10 +98,11 @@ public class JournalEntryController {
             @ApiResponse(responseCode = "401", description = "Unauthorized access.")
     })
     public ResponseEntity<Void> deleteJournalEntryById(
-            @Parameter(description = "ID of the journal entry to delete.") @PathVariable ObjectId myId) {
+            @Parameter(description = "ID of the journal entry to delete.") @PathVariable String myId) {
+        ObjectId objectId = new ObjectId(myId);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
-        boolean removed = journalService.deleteById(myId, userName);
+        boolean removed = journalService.deleteById(objectId, userName);
         if (removed) {
             return ResponseEntity.noContent().build();
         }
@@ -114,14 +117,15 @@ public class JournalEntryController {
             @ApiResponse(responseCode = "401", description = "Unauthorized access.")
     })
     public ResponseEntity<Journal> updateJournalById(
-            @Parameter(description = "ID of the journal entry to update.") @PathVariable ObjectId myId,
+            @Parameter(description = "ID of the journal entry to update.") @PathVariable String myId,
             @RequestBody Journal newJournal) {
+        ObjectId objectId = new ObjectId(myId);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
         User user = userService.findByUserName(userName);
-        List<Journal> collect = user.getJournal().stream().filter(x -> x.getId().equals(myId)).collect(Collectors.toList());
+        List<Journal> collect = user.getJournal().stream().filter(x -> x.getId().equals(objectId)).collect(Collectors.toList());
         if (!collect.isEmpty()) {
-            Optional<Journal> journal = journalService.findById(myId);
+            Optional<Journal> journal = journalService.findById(objectId);
             if (journal.isPresent()) {
                 Journal old = journal.get();
                 old.setTitle(newJournal.getTitle() != null && !newJournal.getTitle().isEmpty() ? newJournal.getTitle() : old.getTitle());
